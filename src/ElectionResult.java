@@ -5,21 +5,30 @@ public class ElectionResult {
     private double total_votes;
     private double per_dem;
     private double per_gop;
-    private String diff;
+    private double diff;
     private String per_point_diff;
     private String state_abbr;
     private String county_name;
     private double combined_fips;
 
-    public ElectionResult(){
-        //for now, all fields must be input after the creation of the object
+    public ElectionResult(double votes_dem, double votes_gop, double total_votes, double per_dem, double per_gop, double diff, String per_point_diff, String state_abbr, String county_name, double combined_fips) {
+        this.votes_dem = votes_dem;
+        this.votes_gop = votes_gop;
+        this.total_votes = total_votes;
+        this.per_dem = per_dem;
+        this.per_gop = per_gop;
+        this.diff = diff;
+        this.per_point_diff = per_point_diff;
+        this.state_abbr = state_abbr;
+        this.county_name = county_name;
+        this.combined_fips = combined_fips;
     }
 
     public double getTotal_votes() {
         return total_votes;
     }
 
-    public String getDiff() {
+    public double getDiff() {
         return diff;
     }
 
@@ -55,7 +64,7 @@ public class ElectionResult {
         return state_abbr;
     }
 
-    public void setDiff(String diff) {
+    public void setDiff(double diff) {
         this.diff = diff;
     }
 
