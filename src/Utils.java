@@ -26,7 +26,7 @@ public class Utils {
         ArrayList<ElectionResult> output = new ArrayList<>();
         for (int i = 1; i < lines.length; i++) {
             String line = lines[i];
-            line = cleanString(line);
+            line = betterClean(line);
 
             String[] values = line.split(",");
             double votes_dem = Double.parseDouble(values[1].trim());
@@ -47,23 +47,20 @@ public class Utils {
         return output;
     }
 
-    private static String cleanString(String line) {
-        String[] arrString = line.split("");
+    private static String betterClean(String line){
         int startIndex = line.indexOf("\"");
         int endIndex = line.indexOf("\"", startIndex + 1);
-        int commaIndex = line.indexOf(",", startIndex);
-        while(commaIndex != -1 && commaIndex < endIndex) {
 
-            commaIndex = line.indexOf(",", startIndex);
-            if (commaIndex < endIndex) {
-                arrString[commaIndex] = "";
-            }
-            startIndex = commaIndex;
+        if(startIndex != -1) {
+            String beforeQuotes = line.substring(0, startIndex);
+            String imbetween = line.substring(startIndex + 1, endIndex);
+            String afterQuotes = line.substring(endIndex + 1);
+
+
+            imbetween = imbetween.replaceAll(",", "");
+
+            return beforeQuotes + imbetween + afterQuotes;
         }
-        String output = "";
-        for(int i=0;i<arrString.length;i++)
-            output+=arrString[i];
-
-        return output;
+        return line;
     }
 }

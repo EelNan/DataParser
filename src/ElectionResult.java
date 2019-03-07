@@ -106,6 +106,8 @@ public class ElectionResult {
 
     @Override
     public String toString() {
-        return super.toString();
+        return votes_dem + ", " + votes_gop + ", " + total_votes + ", " + per_dem
+                + ", " + per_gop + ", " + diff + ", " + per_point_diff + ", " + state_abbr
+                + ", " + county_name + ", " + combined_fips;
     }
 }
