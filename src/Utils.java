@@ -47,21 +47,59 @@ public class Utils {
         return output;
     }
 
+    private static ArrayList<State> parseStates(String electionResults, String educationData, String employmentData){
+        String[] electionOrganized = organizeData(electionResults, 1);
+        String[] educationOrganized = organizeData(educationData, 5);
+        String[] employmentOrganized = organizeData(employmentData, 8);
+
+        ArrayList<State> states = new ArrayList<>();
+        makeStates(electionOrganized, states);
+    }
+
+    private static void makeStates(String[] electionOrganized, ArrayList<State> states) {
+        for(int i = 0; i < electionOrganized.length; i++){
+            String name = electionOrganized[9];
+            if(states.size() == 0) states.add(new State(name, null));
+            for(State state : states){
+                if(!state.getName().equalsIgnoreCase(name)) states.add(new State(name, null));
+            }
+
+        }
+    }
+
     private static String betterClean(String line){
-        line.replaceAll("%", "");
-        int startIndex = line.indexOf("\"");
-        int endIndex = line.indexOf("\"", startIndex + 1);
+        line = line.replaceAll("%", "");
+        while(line.contains("\"")) {
+            int startIndex = line.indexOf("\"");
+            int endIndex = line.indexOf("\"", startIndex + 1);
 
-        if(startIndex != -1) {
-            String beforeQuotes = line.substring(0, startIndex);
-            String imbetween = line.substring(startIndex + 1, endIndex);
-            String afterQuotes = line.substring(endIndex + 1);
+            if (startIndex != -1) {
+                String beforeQuotes = line.substring(0, startIndex);
+                String imbetween = line.substring(startIndex + 1, endIndex);
+                String afterQuotes = line.substring(endIndex + 1);
 
+                imbetween = imbetween.replaceAll(",", "");
 
-            imbetween = imbetween.replaceAll(",", "");
-
-            return beforeQuotes + imbetween + afterQuotes;
+                line = beforeQuotes + imbetween + afterQuotes;
+            }
         }
         return line;
+    }
+
+    private static String[] organizeData(String data, int skipIndex){
+        String[] lines = data.split("\n");
+        String[] cutLines = removeLines(lines, skipIndex);
+        for(int i = 0; i < cutLines.length; i++){
+            cutLines[i] = betterClean(cutLines[i]);
+        }
+        return lines;
+    }
+
+    private static String[] removeLines(String[] lines, int startIndex) {
+        String[] output = new String[lines.length - startIndex];
+        for(int i = startIndex; i < lines.length; i++){
+            output[i - startIndex] = lines[i];
+        }
+        return output;
     }
 }
