@@ -35,7 +35,7 @@ public class Utils {
             double per_dem = Double.parseDouble(values[4].trim());
             double per_gop = Double.parseDouble(values[5].trim());
             double diff = Double.parseDouble(values[6].trim());
-            String per_point_diff = values[7].trim();
+            double per_point_diff = Double.parseDouble(values[7].trim());
             String state_abbr = values[8].trim();
             String county_name = values[9].trim();
             double combined_fips = Double.parseDouble(values[10].trim());
@@ -48,6 +48,7 @@ public class Utils {
     }
 
     private static String betterClean(String line){
+        line.replaceAll("%", "");
         int startIndex = line.indexOf("\"");
         int endIndex = line.indexOf("\"", startIndex + 1);
 
